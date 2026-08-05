@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Portfolio Saya</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+
+body{
+transition:.4s;
+background:#f8f9fa;
+}
+
+.hero{
+padding:90px 20px;
+background:linear-gradient(135deg,#0d6efd,#6610f2);
+color:white;
+}
+
+.card{
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.dark-mode{
+background:#121212;
+color:white;
+}
+
+.dark-mode .card{
+background:#222;
+color:white;
+}
+
+.dark-mode footer{
+background:#000!important;
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+
+<div class="container">
+
+<a class="navbar-brand fw-bold" href="#">
+Portfolio Saya
+</a>
+
+<button class="navbar-toggler"
+data-bs-toggle="collapse"
+data-bs-target="#menu">
+
+<span class="navbar-toggler-icon"></span>
+
+</button>
+
+<div class="collapse navbar-collapse" id="menu">
+
+<ul class="navbar-nav ms-auto">
+
+<li class="nav-item">
+<a class="nav-link active" href="#">Beranda</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#profil">Profil</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#galeri">Galeri</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#kontak">Kontak</a>
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</nav>
+
+<!-- Hero -->
+
+<section class="hero text-center">
+
+<div class="container">
+
+<img src="https://cdn.phototourl.com/free/2026-07-29-2136a17f-d35d-46ee-ae58-34b002fba60c.jpg"
+class="rounded-circle shadow mb-3">
+
+<h1>Halo, Saya Aldo
+
+</h1>
+
+<p class="lead">
+Siswa Kelas XII RPL SMK Muhammadiyah Majenang
+</p>
+
+<button class="btn btn-warning me-2"
+onclick="lihatProfil()">
+
+<i class="bi bi-person-fill"></i>
+Lihat Profil
+
+</button>
+
+<button class="btn btn-light"
+onclick="darkMode()">
+
+🌙 Dark Mode
+
+</button>
+
+</div>
+
+</section>
+
+<!-- Card -->
+
+<section id="profil" class="py-5">
+
+<div class="container">
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div class="card h-100 shadow">
+
+<div class="card-body text-center">
+
+<i class="bi bi-person-circle display-4 text-primary"></i>
+
+<h4 class="mt-3">Data Diri</h4>
+
+<p>
+
+Nama : Aldo
+
+<br>
+
+Jurusan :RPL
+
+<br>
+
+Kelas : XII RPL 3
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card h-100 shadow">
+
+<div class="card-body text-center">
+
+<i class="bi bi-building display-4 text-success"></i>
+
+<h4 class="mt-3">Sekolah</h4>
+
+<p>
+
+SMK Muhammadiyah Majenang
+
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card h-100 shadow">
+
+<div class="card-body text-center">
+
+<i class="bi bi-controller display-4 text-warning"></i>
+
+<h4 class="mt-3">Hobi</h4>
+
+<p>
+
+Minecraft
+
+<br>
+
+Main
+
+<br>
+
+Editing
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Galeri -->
+
+<section id="galeri" class="container py-5">
+
+<h2 class="text-center mb-4">
+
+Galeri
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-4 mb-3">
+
+<img src="https://picsum.photos/400/250?1"
+class="img-fluid rounded shadow">
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+<img src="https://picsum.photos/400/250?2"
+class="img-fluid rounded shadow">
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+<img src="https://picsum.photos/400/250?3"
+class="img-fluid rounded shadow">
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Kontak -->
+
+<section id="kontak" class="container py-5">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h3>Hubungi Saya</h3>
+
+<form>
+
+<div class="mb-3">
+
+<input type="text"
+class="form-control"
+placeholder="Nama">
+
+</div>
+
+<div class="mb-3">
+
+<input type="email"
+class="form-control"
+placeholder="Email">
+
+</div>
+
+<div class="mb-3">
+
+<textarea
+class="form-control"
+rows="4"
+placeholder="Pesan"></textarea>
+
+</div>
+
+<button type="button"
+class="btn btn-primary"
+onclick="kirimPesan()">
+
+Kirim
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="bg-primary text-white text-center p-3">
+
+© 2026 Portfolio XINNN
+
+</footer>
+
+<script>
+
+function lihatProfil(){
+
+alert("Halo! Selamat datang di halaman portfolio saya.");
+
+}
+
+function kirimPesan(){
+
+alert("Terima kasih, pesan berhasil dikirim!");
+
+}
+
+function darkMode(){
+
+document.body.classList.toggle("dark-mode");
+
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
