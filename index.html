@@ -1,356 +1,1317 @@
+```html
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Portfolio Saya</title>
+    <title>Portfolio Revaldo Eka Novandi</title>
 
-<!-- Bootstrap 5 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap Icons -->
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<style>
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
-body{
-transition:.4s;
-background:#f8f9fa;
-}
+    <style>
+        /* =====================================================
+           SISTEM TEMA TERPUSAT
+           ===================================================== */
 
-.hero{
-padding:90px 20px;
-background:linear-gradient(135deg,#0d6efd,#6610f2);
-color:white;
-}
+        :root {
+            --bg: #f8f9fa;
+            --text: #212529;
+            --muted: #6c757d;
+            --card: #ffffff;
+            --nav: #0d6efd;
+            --hero: linear-gradient(135deg, #805959, #2e2d2d00);
+            --input-bg: #ffffff;
+            --input-border: #ced4da;
+            --placeholder: #6c757d;
+            --profile-name: #0d6efd;
+            --shadow: rgba(0, 0, 0, .12);
+        }
 
-.card{
-transition:.3s;
-}
+        html[data-theme="dark"] {
+            --bg: #121212;
+            --text: #f5f5f5;
+            --muted: #d1d5db;
+            --card: #222222;
+            --nav: #111111;
+            --hero: #121212;
+            --input-bg: #1f1f1f;
+            --input-border: #444444;
+            --placeholder: #aeb4be;
+            --profile-name: #ffffff;
+            --shadow: rgba(0, 0, 0, .45);
+        }
 
-.card:hover{
-transform:translateY(-8px);
-}
 
-.dark-mode{
-background:#121212;
-color:white;
-}
+        /* =====================================================
+           PEMISAH BAGIAN ATAS + SMOOTH SCROLL
+           ===================================================== */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 78px;
+        }
 
-.dark-mode .card{
-background:#222;
-color:white;
-}
+        /* Navbar tetap terlihat sebagai bagian terpisah dari hero */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(127, 127, 127, .18);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, .08);
+        }
 
-.dark-mode footer{
-background:#000!important;
-}
+        /* Pemisah hanya untuk area paling atas / Portfolio Saya.
+           Hero/profil tetap tanpa bingkai tambahan. */
+        html[data-theme="dark"] .navbar {
+            background: #080a0f !important;
+            border-bottom: 1px solid rgba(255, 255, 255, .14);
+            box-shadow: 0 5px 22px rgba(0, 0, 0, .55);
+        }
 
-</style>
+        html[data-theme="dark"] .navbar .navbar-brand {
+            color: #ffffff !important;
+        }
 
+        /* Hero/profil tetap menyatu dengan background utama,
+           tanpa frame atau kotak tambahan. */
+        html[data-theme="dark"] #hero {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* Animasi scroll section */
+        .modern-section {
+            scroll-margin-top: 82px;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
+
+            .modern-section,
+            #hero {
+                animation: sectionReveal .7s ease both;
+            }
+
+            @keyframes sectionReveal {
+                from {
+                    opacity: .82;
+                    transform: translateY(14px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .modern-section,
+            #hero {
+                animation: none !important;
+            }
+        }
+
+        /* =====================================================
+           TRANSISI TEMA
+           ===================================================== */
+
+        html,
+        body,
+        body * {
+            transition:
+                background-color .25s ease,
+                color .25s ease,
+                border-color .25s ease,
+                box-shadow .25s ease,
+                fill .25s ease,
+                stroke .25s ease;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* PARTICLE BACKGROUND - hanya aktif pada Dark Mode */
+        #darkParticles {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            display: none;
+        }
+
+        html[data-theme="dark"] #darkParticles {
+            display: block;
+        }
+
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            z-index: 2000;
+            background: #0d6efd;
+            box-shadow: 0 0 10px rgba(13, 110, 253, .45);
+            pointer-events: none;
+            transition: width .08s linear;
+        }
+
+        html[data-theme="dark"] #scrollProgress {
+            background: #6ea8fe;
+            box-shadow: 0 0 12px rgba(110, 168, 254, .55);
+        }
+
+        /* =====================================================
+           NAVBAR
+           ===================================================== */
+
+        .navbar {
+            background-color: var(--nav) !important;
+        }
+
+        .theme-toggle {
+            min-height: 42px;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, .28);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .10);
+            color: #fff;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            white-space: nowrap;
+            font-weight: 700;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 5px 18px rgba(0, 0, 0, .16);
+            transition: transform .25s ease, background .25s ease,
+                        border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, .20);
+            border-color: rgba(255, 255, 255, .48);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .24);
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, .75);
+            outline-offset: 3px;
+        }
+
+        html[data-theme="dark"] .theme-toggle {
+            background: rgba(255, 255, 255, .07);
+            border-color: rgba(255, 255, 255, .18);
+            box-shadow: 0 6px 22px rgba(0, 0, 0, .35);
+        }
+
+        html[data-theme="dark"] .theme-toggle:hover {
+            background: rgba(255, 255, 255, .13);
+            border-color: rgba(255, 255, 255, .32);
+        }
+
+        .theme-toggle:active {
+            transform: scale(.97);
+        }
+
+        /* =====================================================
+           HERO
+           ===================================================== */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 30px 30px;
+            background: var(--hero);
+            color: var(--text);
+            min-height: 10vh;
+        }
+
+        #hero {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: 0 !important;
+            padding: 18px 0 28px !important;
+            margin: 0 auto !important;
+        }
+
+        .hero-profile {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 12px;
+        }
+
+        .profile-video {
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            border-radius: 30px;
+            overflow: hidden;
+            display: block;
+            object-fit: cover;
+            pointer-events: none;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        #hero .profile-text {
+            position: relative;
+            padding-top: 34px;
+            flex: 1;
+        }
+
+        .halo-text {
+            color: var(--text);
+            font-size: 40px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .nama-text {
+            color: var(--profile-name);
+            font-size: 50px;
+            font-weight: bold;
+            line-height: 1.2;
+            display: block;
+        }
+
+        .deskripsiProfil {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 20px;
+            line-height: 1.4;
+            margin-top: 15px;
+        }
+
+        .deskripsiProfil .atas-text,
+        .deskripsiProfil .bawa-text {
+            color: var(--muted);
+            font-size: 20px;
+            line-height: 1.4;
+        }
+
+        /* =====================================================
+           SECTION
+           ===================================================== */
+
+        .modern-section {
+            margin-top: 36px;
+            margin-bottom: 36px;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .modern-section::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -18px;
+            width: 100%;
+            height: 1px;
+
+            background: repeating-linear-gradient(to right,
+                    rgba(127, 127, 127, .28) 0,
+                    rgba(127, 127, 127, .28) 8px,
+                    transparent 8px,
+                    transparent 16px);
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* =====================================================
+           CONTAINER UTAMA
+           ===================================================== */
+
+        .modern-container {
+            padding: 34px;
+            border-radius: 28px;
+
+            background: var(--card);
+            color: var(--text);
+
+            box-shadow: 0 14px 40px var(--shadow);
+
+            border: 1px solid rgba(127, 127, 127, .12);
+
+            position: relative;
+        }
+
+        .modern-container::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -18px;
+            width: 100%;
+            height: 1px;
+
+            background: linear-gradient(to right,
+                    transparent,
+                    rgba(127, 127, 127, .22),
+                    transparent);
+
+            pointer-events: none;
+        }
+
+        .modern-section:last-of-type .modern-container::after {
+            display: none;
+        }
+
+        /* =====================================================
+           JUDUL SECTION
+           ===================================================== */
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 26px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .section-heading p {
+            margin: 3px 0 0;
+            color: var(--muted);
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
+            background: rgba(13, 110, 253, .10);
+
+            font-size: 24px;
+        }
+
+        /* =====================================================
+           CARD PROFIL
+           ===================================================== */
+
+        .profile-info-card {
+            padding: 26px;
+            border-radius: 22px;
+
+            background: var(--card) !important;
+            color: var(--text);
+
+            border: 1px solid rgba(127, 127, 127, .15);
+
+            box-shadow: 0 8px 22px var(--shadow);
+
+            min-height: 190px;
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .profile-info-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 30px var(--shadow);
+        }
+
+        .profile-info-card h3 {
+            margin: 12px 0 10px;
+            font-size: 22px;
+            font-weight: 750;
+        }
+
+        .profile-info-card p {
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .info-icon {
+            width: 44px;
+            height: 44px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(13, 110, 253, .10);
+            color: #0d6efd;
+
+            font-size: 22px;
+        }
+
+        .profile-purple,
+        .profile-white,
+        .profile-yellow {
+            background: var(--card) !important;
+        }
+
+        /* =====================================================
+           GALERI
+           ===================================================== */
+
+        .media-card {
+            overflow: hidden;
+
+            border-radius: 22px;
+
+            background: var(--card);
+
+            border: 1px solid rgba(127, 127, 127, .15);
+
+            box-shadow: 0 8px 24px var(--shadow);
+
+            aspect-ratio: 3 / 2;
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .media-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 30px var(--shadow);
+        }
+
+        .media-card img,
+        .media-card video {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            user-select: none;
+
+            display: block;
+
+            object-fit: cover;
+        }
+
+        /* =====================================================
+           FORM
+           ===================================================== */
+
+        .contact-container {
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-form-wrap {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .form-control {
+            background: var(--input-bg);
+            color: var(--text);
+            border-color: var(--input-border);
+        }
+
+        .form-control:focus {
+            background: var(--input-bg);
+            color: var(--text);
+        }
+
+        .form-control::placeholder {
+            color: var(--placeholder);
+        }
+
+        html[data-theme="dark"] .form-control {
+            color-scheme: dark;
+        }
+
+        /* =====================================================
+           DARK MODE
+           ===================================================== */
+
+        html[data-theme="dark"] .modern-container {
+            background: #222222;
+            color: #f5f5f5;
+            border-color: rgba(255, 255, 255, .08);
+        }
+
+        html[data-theme="dark"] .profile-info-card,
+        html[data-theme="dark"] .media-card {
+            background: #222222 !important;
+            color: #f5f5f5;
+            border-color: rgba(255, 255, 255, .08);
+
+            box-shadow:
+                0 8px 24px rgba(0, 0, 0, .45);
+        }
+
+        html[data-theme="dark"] .profile-info-card:hover,
+        html[data-theme="dark"] .media-card:hover {
+            box-shadow:
+                0 14px 32px rgba(0, 0, 0, .55);
+        }
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        footer {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 768px) {
+
+            .modern-section {
+                margin-top: 24px;
+                margin-bottom: 24px;
+            }
+
+            .modern-container {
+                padding: 22px;
+                border-radius: 22px;
+            }
+
+            .section-heading h2 {
+                font-size: 25px;
+            }
+
+            .hero-profile {
+                flex-direction: column;
+                text-align: center;
+                gap: 25px;
+            }
+
+            .profile-video {
+                max-width: 280px;
+                height: 280px;
+            }
+
+            #hero .profile-text {
+                width: 100%;
+                padding-top: 28px;
+            }
+
+            .halo-text {
+                font-size: 30px;
+            }
+
+            .nama-text {
+                font-size: 36px;
+            }
+
+            .deskripsiProfil .atas-text,
+            .deskripsiProfil .bawa-text {
+                font-size: 17px;
+            }
+
+            .theme-toggle {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .profile-video {
+                max-width: 240px;
+                height: 240px;
+            }
+
+            .halo-text {
+                font-size: 27px;
+            }
+
+            .nama-text {
+                font-size: 30px;
+            }
+
+            .modern-container {
+                padding: 18px;
+            }
+
+            .profile-info-card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <div id="scrollProgress" aria-hidden="true"></div>
 
-<!-- Navbar -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <canvas id="darkParticles"></canvas>
 
-<div class="container">
+    <!-- =========================================================
+     NAVBAR
+     ========================================================= -->
 
-<a class="navbar-brand fw-bold" href="#">
-Portfolio Saya
-</a>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
 
-<button class="navbar-toggler"
-data-bs-toggle="collapse"
-data-bs-target="#menu">
+        <div class="container">
 
-<span class="navbar-toggler-icon"></span>
+            <a class="navbar-brand fw-bold" href="#">
+                Portfolio Saya
+            </a>
 
-</button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+                aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<div class="collapse navbar-collapse" id="menu">
+            <div class="collapse navbar-collapse" id="menu">
 
-<ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
 
-<li class="nav-item">
-<a class="nav-link active" href="#">Beranda</a>
-</li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            Beranda
+                        </a>
+                    </li>
 
-<li class="nav-item">
-<a class="nav-link" href="#profil">Profil</a>
-</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#profil">
+                            Profil
+                        </a>
+                    </li>
 
-<li class="nav-item">
-<a class="nav-link" href="#galeri">Galeri</a>
-</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#galeri">
+                            Galeri
+                        </a>
+                    </li>
 
-<li class="nav-item">
-<a class="nav-link" href="#kontak">Kontak</a>
-</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#kontak">
+                            Kontak
+                        </a>
+                    </li>
 
-</ul>
+                    <li class="nav-item">
 
-</div>
+                        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Ubah tema">
+                            <span id="themeIcon">☾</span>
+                            <span id="themeText">Ubah Warna</span>
+                        </button>
 
-</div>
+                    </li>
 
-</nav>
+                </ul>
 
-<!-- Hero -->
+            </div>
+        </div>
+    </nav>
 
-<section class="hero text-center">
 
-<div class="container">
+    <!-- =========================================================
+     HERO
+     ========================================================= -->
 
-<img src="https://cdn.phototourl.com/free/2026-07-29-2136a17f-d35d-46ee-ae58-34b002fba60c.jpg"
-class="rounded-circle shadow mb-3">
+    <section id="hero" class="hero text-start">
 
-<h1>Halo, Saya Aldo
+        <div class="hero-profile">
 
-</h1>
+            <video class="profile-video" autoplay muted loop playsinline>
+                <source src="profil.mp4" type="video/mp4">
+                Browser kamu tidak mendukung video.
+            </video>
 
-<p class="lead">
-Siswa Kelas XII RPL SMK Muhammadiyah Majenang
-</p>
 
-<button class="btn btn-warning me-2"
-onclick="lihatProfil()">
+            <div class="profile-text">
 
-<i class="bi bi-person-fill"></i>
-Lihat Profil
+                <h2 id="judulProfil">
 
-</button>
+                    <span class="halo-text">
+                        Halo, saya
+                    </span>
 
-<button class="btn btn-light"
-onclick="darkMode()">
+                    <span class="nama-text">
+                        Revaldo Eka Novandi
+                    </span>
 
-🌙 Dark Mode
+                </h2>
 
-</button>
 
-</div>
+                <p class="deskripsiProfil">
 
-</section>
+                    <span class="atas-text">
+                        Siswa Kelas XII Jurusan Rekayasa
+                    </span>
 
-<!-- Card -->
+                    <span class="bawa-text">
+                        Perangkat Lunak di SMK Muhammadiyah Majenang
+                    </span>
 
-<section id="profil" class="py-5">
+                </p>
 
-<div class="container">
+            </div>
 
-<div class="row g-4">
+        </div>
 
-<div class="col-md-4">
+    </section>
 
-<div class="card h-100 shadow">
 
-<div class="card-body text-center">
+    <!-- =========================================================
+     PROFIL
+     ========================================================= -->
 
-<i class="bi bi-person-circle display-4 text-primary"></i>
+    <section id="profil" class="modern-section container" data-aos="fade-up">
 
-<h4 class="mt-3">Data Diri</h4>
+        <div class="modern-container">
 
-<p>
+            <div class="section-heading">
 
-Nama : Aldo
+                <span class="section-icon">
+                    👤
+                </span>
 
-<br>
+                <div>
 
-Jurusan :RPL
+                    <h2>
+                        Profil
+                    </h2>
 
-<br>
+                    <p>
+                        Informasi singkat tentang saya
+                    </p>
 
-Kelas : XII RPL 3
+                </div>
 
-</p>
+            </div>
 
-</div>
 
-</div>
+            <div class="row g-4">
 
-</div>
+                <!-- DATA DIRI -->
 
-<div class="col-md-4">
+                <div class="col-md-4">
 
-<div class="card h-100 shadow">
+                    <div class="profile-info-card h-100">
 
-<div class="card-body text-center">
+                        <div class="info-icon">
+                            <i class="bi bi-person-circle"></i>
+                        </div>
 
-<i class="bi bi-building display-4 text-success"></i>
+                        <h3>
+                            Data Diri
+                        </h3>
 
-<h4 class="mt-3">Sekolah</h4>
+                        <p>
 
-<p>
+                            <strong>Nama</strong>
+                            : Revaldo Eka Novandi
+                            <br>
 
-SMK Muhammadiyah Majenang
+                            <strong>Kelas</strong>
+                            : XII RPL 3
+                            <br>
 
+                            <strong>Alamat</strong>
+                            : Desa Limbangan, Wanareja, Cilacap
 
-</p>
+                        </p>
 
-</div>
+                    </div>
 
-</div>
+                </div>
+                <div class="col-md-4">
 
-</div>
+                    <div class="profile-info-card h-100">
 
-<div class="col-md-4">
+                        <div class="info-icon">
+                            <i class="bi bi-building"></i>
+                        </div>
 
-<div class="card h-100 shadow">
+                        <h3>
+                            Sekolah
+                        </h3>
 
-<div class="card-body text-center">
+                        <p>
+                            SMK Muhammadiyah Majenang
+                        </p>
 
-<i class="bi bi-controller display-4 text-warning"></i>
+                    </div>
 
-<h4 class="mt-3">Hobi</h4>
+                </div>
 
-<p>
 
-Minecraft
+                <!-- HOBI -->
 
-<br>
+                <div class="col-md-4">
 
-Main
+                    <div class="profile-info-card h-100">
 
-<br>
+                        <div class="info-icon">
+                            <i class="bi bi-controller"></i>
+                        </div>
 
-Editing
+                        <h3>
+                            Hobi
+                        </h3>
 
-</p>
+                        <p>
+                            🎮 Minecraft
+                            <br>
+                            🎬 Editing
+                            <br>
+                            😊 Main
+                        </p>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </section>
 
-</section>
 
-<!-- Galeri -->
+    <!-- =========================================================
+     GALERI
+     ========================================================= -->
 
-<section id="galeri" class="container py-5">
+    <section id="galeri" class="modern-section container" data-aos="fade-up">
 
-<h2 class="text-center mb-4">
+        <div class="modern-container">
 
-Galeri
+            <div class="section-heading">
 
-</h2>
+                <span class="section-icon">
+                    🖼️
+                </span>
 
-<div class="row">
+                <div>
 
-<div class="col-md-4 mb-3">
+                    <h2>
+                        Galeri
+                    </h2>
 
-<img src="https://picsum.photos/400/250?1"
-class="img-fluid rounded shadow">
+                    <p>
+                        Foto dan video Random
+                    </p>
 
-</div>
+                </div>
 
-<div class="col-md-4 mb-3">
+            </div>
 
-<img src="https://picsum.photos/400/250?2"
-class="img-fluid rounded shadow">
 
-</div>
+            <div class="row g-4 gallery-grid">
 
-<div class="col-md-4 mb-3">
+                <!-- FOTO 1 -->
 
-<img src="https://picsum.photos/400/250?3"
-class="img-fluid rounded shadow">
+                <div class="col-md-4">
 
-</div>
+                    <div class="media-card">
 
-</div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmP5ECda3FXmt0TtOqpNKCUyVgm6F64oVWDPPXn4ed3yx4ZoMHieb1SUYl&s=10" alt="Foto 1">
 
-</section>
+                    </div>
 
-<!-- Kontak -->
+                </div>
 
-<section id="kontak" class="container py-5">
 
-<div class="card shadow">
+                <!-- FOTO 2 -->
 
-<div class="card-body">
+                <div class="col-md-4">
 
-<h3>Hubungi Saya</h3>
+                    <div class="media-card">
 
-<form>
+                        <img src="https://img1.wallspic.com/crops/9/2/0/8/7/178029/178029-your_name_anime-mitsuha_miyamizu-animated_cartoon-anime_art-animation-3840x2160.jpg" alt="Foto 2">
 
-<div class="mb-3">
+                    </div>
 
-<input type="text"
-class="form-control"
-placeholder="Nama">
+                </div>
 
-</div>
 
-<div class="mb-3">
+                <!-- VIDEO -->
 
-<input type="email"
-class="form-control"
-placeholder="Email">
+                <div class="col-md-4">
 
-</div>
+                    <div class="media-card">
 
-<div class="mb-3">
+                        <video controls autoplay muted loop playsinline>
 
-<textarea
-class="form-control"
-rows="4"
-placeholder="Pesan"></textarea>
+                            <source src="profil.mp4" type="video/mp4"> 
+                        </video>
 
-</div>
+                    </div>
 
-<button type="button"
-class="btn btn-primary"
-onclick="kirimPesan()">
+                </div>
 
-Kirim
+            </div>
 
-</button>
+        </div>
 
-</form>
+    </section>
 
-</div>
 
-</div>
+    <!-- =========================================================
+     HUBUNGI SAYA
+     ========================================================= -->
 
-</section>
+    <section id="kontak" class="modern-section container" data-aos="fade-up">
 
-<footer class="bg-primary text-white text-center p-3">
+        <div class="modern-container contact-container">
 
-© 2026 Portfolio XINNN
+            <div class="section-heading">
 
-</footer>
+                <span class="section-icon">
+                    ✉️
+                </span>
 
-<script>
+                <div>
 
-function lihatProfil(){
+                    <h2>
+                        Hubungi Saya
+                    </h2>
 
-alert("Halo! Selamat datang di halaman portfolio saya.");
+                    <p>
+                        Silakan kirim pesan kepada saya
+                    </p>
 
-}
+                </div>
 
-function kirimPesan(){
+            </div>
 
-alert("Terima kasih, pesan berhasil dikirim!");
 
-}
+            <div class="contact-form-wrap">
 
-function darkMode(){
+                <form>
 
-document.body.classList.toggle("dark-mode");
+                    <div class="mb-3">
 
-}
+                        <input type="text" class="form-control" placeholder="Nama">
 
-</script>
+                    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+                    <div class="mb-3">
+
+                        <input type="email" class="form-control" placeholder="Email">
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <textarea class="form-control" rows="4" placeholder="Pesan"></textarea>
+
+                    </div>
+
+
+                    <button type="button" class="btn btn-primary px-4" onclick="kirimPesan()">
+                        Kirim
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+    <footer class="text-center py-4 mt-5">
+
+        <div class="container">
+
+            <p class="mb-0">
+                © 2026 Portfolio Revaldo Eka Novandi
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+     JAVASCRIPT BOOTSTRAP
+     ========================================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- =========================================================
+     AOS
+     ========================================================= -->
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+
+    <script>
+
+        /* =========================================================
+           AOS
+           ========================================================= */
+
+        AOS.init({
+            duration: 800,
+            easing: "ease-in-out",
+            once: true,
+            offset: 120
+        });
+
+
+        /* =========================================================
+           DARK / LIGHT MODE
+           ========================================================= */
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        const themeIcon =
+            document.getElementById("themeIcon");
+
+        const themeText =
+            document.getElementById("themeText");
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        /* Tema awal */
+
+        if (savedTheme === "dark") {
+
+            document.documentElement
+                .setAttribute("data-theme", "dark");
+
+        } else {
+
+            document.documentElement
+                .setAttribute("data-theme", "light");
+
+        }
+
+
+        /* Update tampilan tombol */
+
+        function updateThemeButton() {
+
+            const currentTheme =
+                document.documentElement
+                    .getAttribute("data-theme");
+
+
+            if (currentTheme === "dark") {
+
+                themeIcon.textContent = "☀️";
+                themeText.textContent = "Light Mode";
+
+            } else {
+
+                themeIcon.textContent = "☾";
+                themeText.textContent = "Dark Mode";
+
+            }
+
+        }
+
+
+        updateThemeButton();
+
+
+        /* Tombol tema */
+
+        themeToggle.addEventListener("click", function () {
+
+            const currentTheme =
+                document.documentElement
+                    .getAttribute("data-theme");
+
+            const newTheme =
+                currentTheme === "dark"
+                    ? "light"
+                    : "dark";
+
+
+            document.documentElement
+                .setAttribute("data-theme", newTheme);
+
+
+            localStorage.setItem(
+                "theme",
+                newTheme
+            );
+
+
+            updateThemeButton();
+
+        });
+
+
+        /* =========================================================
+           PARTICLE DARK MODE
+           ========================================================= */
+
+        const particleCanvas = document.getElementById("darkParticles");
+        const particleCtx = particleCanvas.getContext("2d");
+        let particles = [];
+
+        function resizeParticles() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            particleCanvas.width = window.innerWidth * dpr;
+            particleCanvas.height = window.innerHeight * dpr;
+            particleCanvas.style.width = window.innerWidth + "px";
+            particleCanvas.style.height = window.innerHeight + "px";
+            particleCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            const count = Math.min(110, Math.max(45, Math.floor(
+                (window.innerWidth * window.innerHeight) / 16000
+            )));
+
+            particles = Array.from({ length: count }, () => ({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                r: Math.random() * 1.8 + 0.5,
+                vx: (Math.random() - 0.5) * 0.28,
+                vy: (Math.random() - 0.5) * 0.28,
+                a: Math.random() * 0.55 + 0.2
+            }));
+        }
+
+        function animateParticles() {
+            particleCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+            if (document.documentElement.getAttribute("data-theme") === "dark") {
+                for (const p of particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < -5) p.x = window.innerWidth + 5;
+                    if (p.x > window.innerWidth + 5) p.x = -5;
+                    if (p.y < -5) p.y = window.innerHeight + 5;
+                    if (p.y > window.innerHeight + 5) p.y = -5;
+
+                    particleCtx.beginPath();
+                    particleCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    particleCtx.fillStyle = `rgba(255,255,255,${p.a})`;
+                    particleCtx.fill();
+                }
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < 115) {
+                            particleCtx.beginPath();
+                            particleCtx.moveTo(particles[i].x, particles[i].y);
+                            particleCtx.lineTo(particles[j].x, particles[j].y);
+                            particleCtx.strokeStyle =
+                                `rgba(255,255,255,${(1 - distance / 115) * 0.12})`;
+                            particleCtx.lineWidth = 0.6;
+                            particleCtx.stroke();
+                        }
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        resizeParticles();
+        animateParticles();
+        window.addEventListener("resize", resizeParticles);
+
+
+        /* =========================================================
+           SMOOTH SCROLL + PROGRESS
+           ========================================================= */
+        const scrollProgress = document.getElementById("scrollProgress");
+
+        function updateScrollProgress() {
+            const scrollTop = window.scrollY;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = scrollHeight > 0
+                ? (scrollTop / scrollHeight) * 100
+                : 0;
+
+            scrollProgress.style.width = progress + "%";
+        }
+
+        window.addEventListener("scroll", updateScrollProgress, { passive: true });
+        window.addEventListener("resize", updateScrollProgress);
+        updateScrollProgress();
+
+        /* Scroll halus untuk menu anchor */
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener("click", function (event) {
+                const target = document.querySelector(this.getAttribute("href"));
+
+                if (!target) return;
+
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            });
+        });
+
+        /* =========================================================
+           FORM
+           ========================================================= */
+
+        function kirimPesan() {
+
+            alert(
+                "Pesan berhasil diproses!"
+            );
+
+        }
+
+    </script>
 
 </body>
+
 </html>
+```
